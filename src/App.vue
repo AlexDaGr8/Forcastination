@@ -1,17 +1,26 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <h1>Forcastination</h1>
+  <h3>Forcasting your money so you don't have to.</h3>
+  <BalanceView />
+  <div class="grid-2">
+    <ExpenseList />
+    <TransactionView />
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+<script lang="ts" setup>
+import { onMounted } from 'vue';
+import ExpenseList from '@/components/expense/ExpenseList.vue';
+import BalanceView from './components/BalanceView.vue';
+import TransactionView from './components/TransactionView.vue';
+import { useStore } from './store';
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+
+const store = useStore();
+const { calculateTransactions } = store;
+
+onMounted(() => {
+  calculateTransactions();
 });
 </script>
 
@@ -23,5 +32,13 @@ export default defineComponent({
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 80vw;
+  margin: auto;
 }
 </style>
